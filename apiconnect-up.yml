@@ -1,0 +1,122 @@
+apiVersion: v1
+kind: apic.ibm.com/APIConnectCluster
+metadata:
+  creationTimestamp: "2019-08-21T11:55:21Z"
+  name: myProject
+spec:
+  secret-name: myProject
+  subsystems:
+  - apiVersion: v1
+    kind: apic.ibm.com/ManagementSubsystem
+    metadata:
+      creationTimestamp: "2019-08-21T11:55:36Z"
+      name: mgmt
+    spec:
+      ApplianceProperties: null
+      CloudProperties:
+        ingress-type: route
+        mode: dev
+        namespace: apiconnect
+        registry: localhost:5000
+        registry-secret: apic-secret
+        storage-class: hostpath-provisioner
+      SubsystemProperties:
+        secret-name: myProject-mgmt
+        target: kubernetes
+      endpoints:
+        api-manager-ui: manager.169.62.184.118.nip.io
+        cloud-admin-ui: cloud.169.62.184.118.nip.io
+        consumer-api: consumer.169.62.184.118.nip.io
+        platform-api: platform.169.62.184.118.nip.io
+      settings:
+        cassandra-cluster-size: 1
+        cassandra-max-memory-gb: 5
+        cassandra-volume-size-gb: 10
+    status: {}
+  - apiVersion: v1
+    kind: apic.ibm.com/AnalyticsSubsystem
+    metadata:
+      creationTimestamp: "2019-08-21T17:16:05Z"
+      name: a7s
+    spec:
+      ApplianceProperties: null
+      CloudProperties:
+        ingress-type: route
+        mode: dev
+        namespace: apiconnect
+        registry: localhost:5000
+        registry-secret: apic-secret
+        storage-class: hostpath-provisioner
+      SubsystemProperties:
+        secret-name: myProject-a7s
+        target: kubernetes
+      endpoints:
+        analytics-client: analytics-client.169.62.184.118.nip.io
+        analytics-ingestion: analytics-ingestion.169.62.184.118.nip.io
+      settings:
+        coordinating-max-memory-gb: 6
+        data-max-memory-gb: 8
+        data-storage-size-gb: 200
+        master-max-memory-gb: 8
+        master-storage-size-gb: 5
+    status: {}
+  - apiVersion: v1
+    kind: apic.ibm.com/PortalSubsystem
+    metadata:
+      creationTimestamp: "2019-08-22T05:24:07Z"
+      name: portal
+    spec:
+      ApplianceProperties: null
+      CloudProperties:
+        ingress-type: route
+        mode: dev
+        namespace: apiconnect
+        registry: localhost:5000
+        registry-secret: apic-secret
+        storage-class: hostpath-provisioner
+      SubsystemProperties:
+        secret-name: myProject-portal
+        target: kubernetes
+      endpoints:
+        portal-admin: padmin.169.62.184.118.nip.io
+        portal-www: portal.169.62.184.118.nip.io
+      settings:
+        backup-storage-size-gb: 5
+        db-logs-storage-size-gb: 2
+        db-storage-size-gb: 12
+        site-backup-host: ""
+        site-backup-path: ""
+        site-backup-port: 0
+        www-storage-size-gb: 5
+    status: {}
+  - apiVersion: v1
+    kind: apic.ibm.com/GatewaySubsystem
+    metadata:
+      creationTimestamp: "2019-08-29T16:13:49Z"
+      name: gwy
+    spec:
+      ApplianceProperties: null
+      CloudProperties:
+        ingress-type: route
+        mode: dev
+        namespace: apiconnect
+        registry: localhost:5000/datapower
+        registry-secret: apic-secret
+        storage-class: hostpath-provisioner
+      SubsystemProperties:
+        secret-name: myProject-gwy
+        target: kubernetes
+      endpoints:
+        api-gateway: gw.169.62.184.118.nip.io
+        apic-gw-service: gwd.169.62.184.118.nip.io
+      settings:
+        enable-tms: true
+        image-pull-policy: Always
+        max-cpu: 4
+        max-memory-gb: 6
+        replica-count: 1
+        tms-peering-storage-size-gb: 10
+        v5-compatibility-mode: false
+    status: {}
+status:
+  Ready: false
